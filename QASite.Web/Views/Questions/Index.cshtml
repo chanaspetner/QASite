@@ -1,0 +1,35 @@
+﻿@using QASite.Data
+@model QuestionsViewModel
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        @foreach (Question q in Model.Questions)
+        {
+        <div class="card card-body bg-light">
+            <h4>
+                <a href="/questions/viewquestion?id=@q.Id">@q.Title</a>
+            </h4>
+            <div>
+                <span>Tags:</span>
+                @if (q.QuestionsTags != null)
+                {
+                    @foreach (QuestionsTags qt in q.QuestionsTags)
+                    {
+                        <span class="badge badge-primary">@qt.Tag.Name</span>
+                    }
+                }
+                else
+                {
+                    <span>0</span>
+                }
+
+            </div>
+            <div style="margin-top: 10px;">@q.Text</div>
+
+                <span>Likes: @(q.Likes != null ? q.Likes.Count : 0)</span>
+            <br />
+              <span>@(q.Answers != null ? q.Answers.Count : 0)answer(s)</span>
+        </div>
+        }
+    </div>
+</div>
