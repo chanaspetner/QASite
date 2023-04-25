@@ -46,7 +46,7 @@
         <h3>Answers:</h3>
     </div>
 </div>
-@if (Model.Question.Answers != null)
+@if (Model.Question.Answers.Count != 0)
 {
 
     foreach (Answer a in Model.Question.Answers)

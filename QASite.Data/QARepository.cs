@@ -18,9 +18,10 @@ namespace QASite.Data
         public List<Question> GetAll()
         {
             using var context = new QAContext(_connectionString);
-
-            var qs = context.Questions.Include(q => q.QuestionsTags);
-            return qs.Include(q => q.Likes).ToList();
+            return context.Questions.Include(q => q.QuestionsTags).ThenInclude(qt => qt.Tag)
+                .Include(q => q.Answers)
+                .Include(q => q.Likes)
+                .OrderByDescending(q => q.DatePosted).ToList();
         }
 
         public User Login(string email, string password)
@@ -109,11 +110,13 @@ namespace QASite.Data
         public Question GetQuestion(int id)
         {
             using var context = new QAContext(_connectionString);
-            var questions = context.Questions.Include(q => q.User);
-            var q2 = questions.Include(q => q.Likes);
-            return q2.Include(q => q.Answers)
-                .ThenInclude(a => a.User)
-                .FirstOrDefault(q => q.Id == id);           
+            return context.Questions.Include(q => q.User)
+                       .Include(q => q.Likes)
+                       .Include(q => q.Answers)
+                       .Include(q => q.QuestionsTags)
+                       .ThenInclude(qt => qt.Tag)
+                       .FirstOrDefault(q => q.Id == id);
+        
         }
         
         public void AddAnswer(Answer answer)

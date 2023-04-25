@@ -58,7 +58,7 @@ namespace QASite.Web.Controllers
             var repo = new QARepository(connectionString);
             var email = User.Identity.Name;
             var user = repo.GetByEmail(email);
-            var sepTags = tags.Split("").ToList();
+            var sepTags = tags.Split(" ").ToList();
             question.UserId = user.Id;
             question.DatePosted = DateTime.Now;
             repo.AddQuestion(question, sepTags);

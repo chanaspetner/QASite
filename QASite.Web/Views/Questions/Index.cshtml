@@ -24,11 +24,23 @@
                 }
 
             </div>
-            <div style="margin-top: 10px;">@q.Text</div>
+            <div style="margin-top: 10px;">
+                @if (q.Text != null)
+                {
+                    @if (q.Text.Length < 200)
+                    {
+                        @q.Text
+                    }
+                    else
+                    {
+                        @q.Text.Substring(0, 200)
+                    }
+                }
+            </div>
 
-                <span>Likes: @(q.Likes != null ? q.Likes.Count : 0)</span>
+                <span>Likes: @(q.Likes != null ? q.Likes.Count() : 0)</span>
             <br />
-              <span>@(q.Answers != null ? q.Answers.Count : 0)answer(s)</span>
+              <span>@(q.Answers != null ? q.Answers.Count() : 0) answer(s)</span>
         </div>
         }
     </div>
